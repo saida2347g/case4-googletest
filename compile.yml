@@ -1,0 +1,13 @@
+name: Compile test contracts
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: cmake -S . -B build
+      - name: Compile test contracts (not execution)
+        run: cmake --build build --target contract_tests --parallel 2
